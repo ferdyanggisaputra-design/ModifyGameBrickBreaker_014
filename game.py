@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 pygame.init()
 
@@ -120,10 +121,40 @@ class Ball:
                                  self.posy), self.radius)
 
     # Used to display the object on the screen
+       # Used to display the object on the screen
     def display(self):
-        self.ball = pygame.draw.circle(
-            screen, self.color, (self.posx,
-                                 self.posy), self.radius)
+        # Roket menghadap ke arah gerak bola
+        ang = math.atan2(self.yFac, self.xFac)
+        dx, dy = math.cos(ang), math.sin(ang)   # arah depan roket
+        px, py = -dy, dx                        # arah samping roket
+
+        def pt(forward, side):
+            # titik relatif terhadap pusat roket, ikut berputar
+            return (self.posx + dx * forward + px * side,
+                    self.posy + dy * forward + py * side)
+
+        # api (panjangnya bergetar)
+        flame = random.randint(7, 13)
+        pygame.draw.polygon(screen, ORANGE,
+                            [pt(-9, -4), pt(-9 - flame, 0), pt(-9, 4)])
+        pygame.draw.polygon(screen, YELLOW,
+                            [pt(-9, -2), pt(-9 - flame * 0.6, 0), pt(-9, 2)])
+
+        # sirip
+        pygame.draw.polygon(screen, RED, [pt(-3, -4), pt(-10, -9), pt(-10, -4)])
+        pygame.draw.polygon(screen, RED, [pt(-3, 4), pt(-10, 9), pt(-10, 4)])
+
+        # badan, hidung, dan jendela
+        pygame.draw.polygon(screen, WHITE,
+                            [pt(-9, -4), pt(4, -4), pt(4, 4), pt(-9, 4)])
+        pygame.draw.polygon(screen, RED, [pt(4, -4), pt(11, 0), pt(4, 4)])
+        wx, wy = pt(-1, 0)
+        pygame.draw.circle(screen, BLUE, (int(wx), int(wy)), 3)
+
+        # Hitbox untuk tabrakan. Ini WAJIB ada, karena getRect() memakai self.ball
+        self.ball = pygame.Rect(self.posx - self.radius,
+                                self.posy - self.radius,
+                                self.radius * 2, self.radius * 2)
 
     # Used to update the state of the object
     def update(self):

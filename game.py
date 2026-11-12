@@ -74,7 +74,7 @@ class Block:
 
         # The white blocks have the health of 200. So,
         # the ball must hit it twice to break
-        if color == WHITE:
+        if color == RED:
             self.health = 200
         else:
             self.health = 100

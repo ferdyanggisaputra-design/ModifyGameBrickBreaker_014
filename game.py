@@ -12,6 +12,8 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 120, 255)
+YELLOW = (255, 220, 0)
+ORANGE = (255, 140, 0)
 
 font = pygame.font.Font('freesansbold.ttf', 15)
 

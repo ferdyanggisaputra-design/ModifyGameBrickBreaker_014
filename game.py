@@ -181,7 +181,7 @@ def populateBlocks(blockWidth, blockHeight,
         for j in range(0, HEIGHT // 2, blockHeight + verticalGap):
             listOfBlocks.append(
                 Block(i, j, blockWidth, blockHeight,
-                      random.choice([WHITE, GREEN])))
+                      random.choice([WHITE, GREEN, RED, BLUE, YELLOW, ORANGE])))
 
     return listOfBlocks
 
